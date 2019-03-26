@@ -104,7 +104,7 @@ tf.app.flags.DEFINE_string(
     'The values of learning_rate decay factor for each segment between boundaries (comma-separated list).')
 # checkpoint related configuration
 tf.app.flags.DEFINE_string(
-    'checkpoint_path', './model',
+    'checkpoint_path', './model/vgg16.ckpt',
     'The path to a checkpoint from which to fine-tune.')
 tf.app.flags.DEFINE_string(
     'checkpoint_model_scope', 'vgg_16',

@@ -45,7 +45,7 @@ import dataset_common
 '''
 tf.app.flags.DEFINE_string('dataset_directory', '/media/rs/7A0EE8880EE83EAF/Detections/PASCAL/VOC',
                            'All datas directory')
-tf.app.flags.DEFINE_string('train_splits', 'VOC2007, VOC2012',
+tf.app.flags.DEFINE_string('train_splits', 'VOC2007',
                            'Comma-separated list of the training data sub-directory')
 tf.app.flags.DEFINE_string('validation_splits', 'VOC2007TEST',
                            'Comma-separated list of the validation data sub-directory')
@@ -365,6 +365,7 @@ def _process_dataset(name, directory, all_splits, num_shards):
   all_records = []
   for split in all_splits:
     jpeg_file_path = os.path.join(directory, split, 'JPEGImages')
+    print(jpeg_file_path)
     images = tf.gfile.ListDirectory(jpeg_file_path)
     jpegs = [im_name for im_name in images if im_name.strip()[-3:]=='jpg']
     all_records.extend(list(zip([split] * len(jpegs), jpegs)))
