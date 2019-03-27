@@ -20,6 +20,18 @@ import tensorflow as tf
 
 slim = tf.contrib.slim
 
+CELL_LABELS = {
+	'none':(0,'Background'),
+	'NWC':(1,'NWC'),
+	'OWC':(2,'OWC'),
+	'NRC':(3,'NRC'),
+	'ERC':(4,'ERC'),
+	'DRC':(5,'DRC'),
+	'TRC':(6,'TRC'),
+	'LRC':(7,'LRC'),
+	'CHC':(8,'CHC'),
+}
+
 VOC_LABELS = {
     'none': (0, 'Background'),
     'aeroplane': (1, 'Vehicle'),

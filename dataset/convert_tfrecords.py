@@ -45,9 +45,9 @@ import dataset_common
 '''
 tf.app.flags.DEFINE_string('dataset_directory', '/media/rs/7A0EE8880EE83EAF/Detections/PASCAL/VOC',
                            'All datas directory')
-tf.app.flags.DEFINE_string('train_splits', 'VOC2007',
+tf.app.flags.DEFINE_string('train_splits', 'CELL',
                            'Comma-separated list of the training data sub-directory')
-tf.app.flags.DEFINE_string('validation_splits', 'VOC2007TEST',
+tf.app.flags.DEFINE_string('validation_splits', 'CELL_TEST',
                            'Comma-separated list of the validation data sub-directory')
 tf.app.flags.DEFINE_string('output_directory', '/media/rs/7A0EE8880EE83EAF/Detections/SSD/dataset/tfrecords',
                            'Output data directory')
@@ -221,6 +221,7 @@ def _find_image_bounding_boxes(directory, cur_record):
   shape = [int(size.find('height').text),
            int(size.find('width').text),
            int(size.find('depth').text)]
+  shape = [480,640,3]
   # Find annotations.
   bboxes = []
   labels = []
@@ -229,9 +230,11 @@ def _find_image_bounding_boxes(directory, cur_record):
   truncated = []
   for obj in root.findall('object'):
       label = obj.find('name').text
-      labels.append(int(dataset_common.VOC_LABELS[label][0]))
-      labels_text.append(label.encode('ascii'))
-
+      try:
+          labels.append(int(dataset_common.CELL_LABELS[label][0]))
+          labels_text.append(label.encode('ascii'))
+      except:
+          continue
       isdifficult = obj.find('difficult')
       if isdifficult is not None:
           difficult.append(int(isdifficult.text))
