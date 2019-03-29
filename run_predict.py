@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # =============================================================================
+# this code originates from Changan Wang
+# and modified by Severus peng for specific personal testing usage.
+# =============================================================================
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -208,10 +211,11 @@ def main(_):
             sess.run(init)
 
             saver.restore(sess, get_checkpoint())
-
+            # Load Images
             np_image = imread('./demo/test.jpg')
+            # return coordinates
             labels_, scores_, bboxes_ = sess.run([all_labels, all_scores, all_bboxes], feed_dict = {image_input : np_image, shape_input : np_image.shape[:-1]})
-
+            # output labeled Image 
             img_to_draw = draw_toolbox.bboxes_draw_on_img(np_image, labels_, scores_, bboxes_, thickness=2)
             imsave('./demo/test_out.jpg', img_to_draw)
 
