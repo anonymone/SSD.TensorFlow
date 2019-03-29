@@ -16,18 +16,14 @@ There are already some TensorFlow based SSD reimplementation codes on GitHub, th
 
 ## ##
 ## Usage
-- Download [Pascal VOC Dataset](https://pjreddie.com/projects/pascal-voc-dataset-mirror/) and reorganize the directory as follows:
+- Dataset Directory
 	```
 	VOCROOT/
-		   |->VOC2007/
+		   |->CELL/
 		   |    |->Annotations/
-		   |    |->ImageSets/
+		   |    |->JPEGImages/
 		   |    |->...
-		   |->VOC2012/
-		   |    |->Annotations/
-		   |    |->ImageSets/
-		   |    |->...
-		   |->VOC2007TEST/
+		   |->CELLTEST/
 		   |    |->Annotations/
 		   |    |->...
 	```
@@ -42,16 +38,10 @@ There are already some TensorFlow based SSD reimplementation codes on GitHub, th
 	```sh
 	python train_ssd.py
 	```
-- Run the following script for evaluation and get mAP:
-
-	```sh
-	python eval_ssd.py
-	python voc_eval.py
-	```
 	Note: you need first modify some directory in voc_eval.py.
 - Run the following script for visualization:
 	```sh
-	python simple_ssd_demo.py
+	python run_predict.py
 	```
 
 All the codes was tested under TensorFlow 1.6, Python 3.5, Ubuntu 16.04 with CUDA 8.0. If you want to run training by yourself, one decent GPU will be highly recommended. The whole training process for VOC07+12 dataset took ~120k steps in total, and each step (32 samples per-batch) took ~1s on my little workstation with single GTX1080-Ti GPU Card. If you need run training without enough GPU memory you can try half of the current batch size(e.g. 16), try to lower the learning rate and run more steps, watching the TensorBoard until convergency. BTW, the codes here had also been tested under TensorFlow 1.4 with CUDA 8.0, but some modifications to the codes are needed to enable replicate model training, take following steps if you need:
@@ -62,37 +52,6 @@ All the codes was tested under TensorFlow 1.6, Python 3.5, Ubuntu 16.04 with CUD
 - now the training process should run perfectly
 - before you run 'eval_ssd.py', you should also remove [this line](https://github.com/HiKapok/SSD.TensorFlow/blob/e8296848b9f6eb585da5945d6b3ae099029ef4bf/eval_ssd.py#L369) because of the interface compatibility
 
-
-***This repo is just created recently, any contribution will be welcomed.***
-
-## Results (VOC07 Metric)
-
-This implementation(SSD300-VGG16) yield **mAP 77.8%** on PASCAL VOC 2007 test dataset(the original performance described in the paper is 77.2%mAP), the details are as follows:
-
-| sofa   | bird  | pottedplant | bus | diningtable | cow | bottle | horse | aeroplane | motorbike
-|:-------|:-----:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|
-|  78.9  |  76.2 |  53.5   |   85.2  |   75.5    |  85.0 |  48.6  | 86.7  |   82.2    |   83.4   |
-| **sheep**  | **train** | **boat**    | **bicycle** | **chair**    | **cat**   | **tvmonitor** | **person** | **car**  | **dog** |
-|  82.4  |  87.6 |  72.7   |   83.0  |   61.3    | 88.2 |  74.5  | 79.6  |   85.3   |   86.4   |
-
-You can download the trained model(VOC07+12 Train) from [GoogleDrive](https://drive.google.com/open?id=1yeYcfcOURcZ4DaElEn9C2xY1NymGzG5W) for further research.
-
-For Chinese friends, you can also download both the trained model and pre-trained vgg16 weights from [BaiduYun Drive](https://pan.baidu.com/s/1kRhZd4p-N46JFpVkMgU3fg), access code: **tg64**.
-
-Here is the training logs and some detection results:
-
-![](logs/loss.JPG "loss")
-![](logs/celoss.JPG "celoss")
-![](logs/locloss.JPG "locloss")
-![](demo/demo1.jpg "demo1")
-![](demo/demo2.jpg "demo2")
-![](demo/demo3.jpg "demo3")
-
-## *Too Busy* TODO
-
-- Adapting for CoCo Dataset
-- Update version SSD-512
-- Transfer to other backbone networks
 
 ## Known Issues
 
@@ -129,10 +88,6 @@ Use this bibtex to cite this repository:
   howpublished={\url{https://github.com/HiKapok/SSD.TensorFlow}},
 }
 ```
-
-## Discussion
-
-Welcome to join in QQ Group(758790869) for more discussion
 
 ## ##
 Apache License, Version 2.0
